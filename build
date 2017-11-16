@@ -1,1 +1,1 @@
-docker build -t mapr-azure/pacc-mssql https://raw.githubusercontent.com/jsunmapr/pacc-mssql/master/Dockerfile 
+docker build -t jameshtsun/pacc-mssql .
