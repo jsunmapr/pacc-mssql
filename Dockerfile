@@ -6,12 +6,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update -qq && apt-get insta
 
 LABEL mapr.os=ubuntu16 mapr.version=5.2.2 mapr.mep_version=3.0.1
 
-RUN wget http://package.mapr.com/releases/installer/ubuntu/mapr-setup.sh -O /mapr-setup.sh
-RUN chmod 755 /mapr-setup.sh
-RUN /mapr-setup.sh -r http://package.mapr.com/releases container client 5.2.2 3.0.1 mapr-client mapr-posix-client-container
+RUN wget http://package.mapr.com/releases/installer/ubuntu/mapr-setup.sh -O /opt/mapr/installer/docker/mapr-setup.sh
+RUN chmod 755 /opt/mapr/installer/docker/mapr-setup.sh
+RUN /opt/mapr/installer/docker/mapr-setup.sh -r http://package.mapr.com/releases container client 5.2.2 3.0.1 mapr-client mapr-posix-client-container
 
 RUN mkdir -p /mapr
-ENTRYPOINT ["/mapr-setup.sh", "container"]
+ENTRYPOINT ["/opt/mapr/installer/docker/mapr-setup.sh", "container"]
 
 EXPOSE 1433
 RUN wget https://raw.githubusercontent.com/jsunmapr/pacc-mssql/master/install.sh -O /install.sh
