@@ -6,17 +6,21 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update -qq && apt-get insta
 
 LABEL mapr.os=ubuntu16 mapr.version=5.2.2 mapr.mep_version=3.0.1
 
-COPY mapr-setup.sh /opt/mapr/installer/docker/
+RUN wget http://package.mapr.com/releases/installer/ubuntu/mapr-setup.sh -O /tmp/mapr-setup.sh
+COPY /tmp/mapr-setup.sh /opt/mapr/installer/docker/
 RUN /opt/mapr/installer/docker/mapr-setup.sh -r http://package.mapr.com/releases container client 5.2.2 3.0.1 mapr-client mapr-posix-client-container
 RUN mkdir -p /mapr
 
 ENTRYPOINT ["/opt/mapr/installer/docker/mapr-setup.sh", "container"]
 
 EXPOSE 1433
-COPY install.sh /
-COPY startup.sh /
+RUN wget https://raw.githubusercontent.com/jsunmapr/pacc-mssql/master/install.sh -O /tmp/install.sh
+COPY /tmp/install.sh /
+RUN wget https://raw.githubusercontent.com/jsunmapr/pacc-mssql/master/startup.sh -O /tmp/startup.sh
+COPY /tmp/startup.sh /
+RUN chmod 755 /install.sh
+RUN chmod 755 /startup.sh
 RUN /install.sh
-#Run SQL Server process.
 
-#CMD ["bash","/startup.sh"]
+#Run SQL Server process.
 CMD ["/startup.sh"]
