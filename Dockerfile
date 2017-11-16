@@ -11,7 +11,7 @@ COPY /mapr-setup.sh /
 RUN /mapr-setup.sh -r http://package.mapr.com/releases container client 5.2.2 3.0.1 mapr-client mapr-posix-client-container
 RUN mkdir -p /mapr
 
-ENTRYPOINT ["/opt/mapr/installer/docker/mapr-setup.sh", "container"]
+ENTRYPOINT ["/mapr-setup.sh", "container"]
 
 EXPOSE 1433
 RUN wget https://raw.githubusercontent.com/jsunmapr/pacc-mssql/master/install.sh -O /install.sh
